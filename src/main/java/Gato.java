@@ -1,7 +1,8 @@
 public class Gato {
+    Dotenv dotenv = new Dotenv();
     int id;
     String url;
-    String apiKey = "live_5L9n2UkY47TT15VGGO6eqFGLZaTUog6fnfTV1horlLMLty2b3hOrdd3sIAPaEGvf";
+    String apiKey = dotenv.getDotenv(); //Luego averiguar la forma de hacer esto con .load();
     String image;
 
     public int getId() {
