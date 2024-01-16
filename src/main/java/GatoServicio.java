@@ -111,12 +111,73 @@ public class GatoServicio {
         if (gatosArray.length > 0){
             int min = 1;
             int max = gatosArray.length;
-            int aleatorio = (int) (Math.random() * ((max-min)-1)) +min;
+            int aleatorio = (int) (Math.random() * ((max-min)+1)) +min;
             int indice = aleatorio - 1;
 
             GatoFavorito gato_favorito = gatosArray[indice];
 
+            //redimensionar en caso de necesitar:
+            Image image = null;
+            try {
+                URL url = new URL(gato_favorito.image.getUrl());
+                image = ImageIO.read(url);
 
+                ImageIcon fondoGato = new ImageIcon(image);
+
+                if (fondoGato.getIconWidth()>800) {
+                    //redimensionamos
+                    Image fondo = fondoGato.getImage();
+                    Image modificada = fondo.getScaledInstance(800,600, Image.SCALE_SMOOTH);
+                    fondoGato = new ImageIcon(modificada);
+                }
+
+                String menu = "Opciones: ";
+                    /*"/n"
+                    +"1. Ver otra imagen /n"
+                    +"2. Eliminar Favorito /n"
+                    +"3. Volver /n";*/
+                String[] botones = {"Ver otra imagen", "Eliminar Favorito", "Volver"};
+                String id_gato = gato_favorito.getId();
+                String opcion = (String) JOptionPane.showInputDialog(null,menu,id_gato,JOptionPane.INFORMATION_MESSAGE, fondoGato, botones,botones[0]);
+                int seleccion = -1;
+                //validamos la opción seleccionada por el usuario.
+                for (int i=0;i<botones.length;i++){
+                    if (opcion.equals(botones[i])){
+                        seleccion = i;
+                    }
+                }
+
+                switch (seleccion){
+                    case 0:
+                        verFavoritos(apiKey);
+                        break;
+                    case 1:
+                        borrarFavorito(gato_favorito);
+                        break;
+                    default:
+                        break;
+                }
+
+            }catch (IOException e){
+                System.out.println(e);
+            }
+
+        }
+    }
+
+    private static void borrarFavorito(GatoFavorito gatoFavorito) {
+        try {
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url("https://api.thecatapi.com/v1/favourites/" +gatoFavorito.getId()+ "")
+                    .delete(null)
+                    .addHeader("Content-Type", "application/json")
+                    .addHeader("x-api-key", gatoFavorito.getApiKey())
+                    .build();
+            Response response = client.newCall(request).execute();
+        }catch (IOException e){
+            System.out.println(e);
         }
     }
 }
