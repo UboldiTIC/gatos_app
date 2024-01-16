@@ -10,7 +10,7 @@ que el repositorio sea privado o permita ocultar archivos).
 
 Se puede mejorar, y queda como desafío para horas de práctica:
 - Buenas Prácticas: https://github.com/santiaguf/gatos_app
-- Redactar el Readme
+- Redactar el Readme -> con Markdown
 - Continuar con la APP para resolver errores de las opciones en el menú. Ej, volver cierra la app.
 - Mejorar incluso la interfaz con desarrollo frontend: Ejemplo e idea: https://github.com/CrissUD/JavaFrontendAsincrono
 
