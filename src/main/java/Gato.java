@@ -1,15 +1,15 @@
 public class Gato {
     Dotenv dotenv = new Dotenv();
-    int id;
+    String id;
     String url;
     String apiKey = dotenv.getDotenv(); //Luego averiguar la forma de hacer esto con .load();
     String image;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
